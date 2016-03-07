@@ -1,0 +1,4 @@
+---
+# handlers file for pptp
+- name: Restart pptpd
+  service: name=pptpd state=restarted

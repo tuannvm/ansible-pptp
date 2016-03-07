@@ -1,0 +1,17 @@
+---
+# tasks file for pptp
+- name: install pptp package
+  apt: name={{ item }} state=present update_cache=yes
+  with_items:
+  - pptpd 
+  - pptp-linux 
+  - ppp
+
+- name: copy configurations
+  copy: src={{ item.src }} dest={{ item.dest }}
+  with_items:
+  - { src: 'csfpre.sh', dest: '/etc/csf/csfpre.sh' }
+  - { src: 'pptp.conf', dest: '/etc/pptpd.conf' }
+  - { src: 'options.pptpd', dest: '/etc/ppp/options.pptpd' }
+  notify:
+  - restart pptpd
